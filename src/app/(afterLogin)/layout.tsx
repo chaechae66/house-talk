@@ -42,7 +42,10 @@ export default async function afterLoginLayout({
           )}
         </div>
       </header>
-      <main className="h-[calc(100%-theme(space.36))] w-full">{children}</main>
+      <div className="grid h-[calc(100%-theme(space.36))] w-full grid-cols-[1fr_4fr]">
+        <nav className="bg-slate-100"></nav>
+        <main className="">{children}</main>
+      </div>
     </>
   );
 }
