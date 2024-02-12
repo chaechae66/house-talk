@@ -19,7 +19,7 @@ export default async function Home() {
             커뮤니티 웹사이트 입니다.
           </p>
           <Link
-            href={"/login"}
+            href={"/auth/login"}
             className="rounded bg-primary px-3 py-2 text-white"
           >
             서비스 이용하기

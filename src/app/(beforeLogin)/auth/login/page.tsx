@@ -1,6 +1,5 @@
-import Link from "next/link";
-import KakaoLogin from "../_components/kakaoLogin";
-import NaverLogin from "../_components/NaverLogin";
+import KakaoLogin from "../../_components/kakaoLogin";
+import NaverLogin from "../../_components/NaverLogin";
 
 export default function Login() {
   return (

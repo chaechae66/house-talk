@@ -1,5 +1,4 @@
 import Link from "next/link";
-import SessionContext from "../SessionContext";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
@@ -21,7 +20,7 @@ export default async function BeforeLogin({
           <Image src={"/logo.png"} alt="메인로고" width={40} height={40} />
           <h2 className="ml-2">하우스,톡</h2>
         </Link>
-        <Link href={"/login"} className="rounded bg-slate-200 px-3 py-2">
+        <Link href={"/auth/login"} className="rounded bg-slate-200 px-3 py-2">
           로그인
         </Link>
       </header>
