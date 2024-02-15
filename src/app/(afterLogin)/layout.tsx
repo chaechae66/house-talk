@@ -2,7 +2,6 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 import Nav from "./_components/Nav";
 import NoImage from "../_components/NoImage";
@@ -14,9 +13,7 @@ export default async function AfterLoginLayout({
   children: ReactNode;
 }) {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect("/");
-  }
+
   return (
     <>
       <header className="sticky top-0 flex h-16 items-center justify-between border-b-[1px] border-solid border-gray-200 bg-white px-4">
@@ -25,7 +22,7 @@ export default async function AfterLoginLayout({
           <h2 className="ml-2">하우스,톡</h2>
         </Link>
         <DropDown>
-          {session.user?.image ? (
+          {session?.user?.image ? (
             <Image
               className="image-rounded"
               src={session.user?.image}
@@ -40,7 +37,7 @@ export default async function AfterLoginLayout({
       </header>
       <div className="grid h-[calc(100%-theme(space.36))] w-full grid-cols-[1fr_4fr]">
         <Nav />
-        <main className="">{children}</main>
+        <main className="overflow-y-auto">{children}</main>
       </div>
     </>
   );
