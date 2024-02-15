@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import SessionContext from "./SessionContext";
+import RQProvider from "./(afterLogin)/_components/RQProvider";
 
 const notoSansKr = Noto_Sans_KR({
   weight: ["100", "200", "300", "400", "500", "700"],
@@ -21,14 +22,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={notoSansKr.className}>
-        <SessionContext>
-          <div className="h-dvh w-dvw bg-white">
-            {children}
-            <footer className="flex h-20 items-center justify-center bg-gray-200">
-              &copy;2024 All rights reserved by Park Chae Yeon
-            </footer>
-          </div>
-        </SessionContext>
+        <RQProvider>
+          <SessionContext>
+            <div className="h-dvh w-dvw bg-white">
+              {children}
+              <footer className="flex h-20 items-center justify-center bg-gray-200">
+                &copy;2024 All rights reserved by Park Chae Yeon
+              </footer>
+            </div>
+          </SessionContext>
+        </RQProvider>
       </body>
     </html>
   );
