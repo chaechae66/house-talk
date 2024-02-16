@@ -11,6 +11,8 @@ export default function Posts() {
   const { data } = useQuery({
     queryKey: ["posts", "recommends"],
     queryFn: getPost,
+    staleTime: 60 * 1000,
+    gcTime: 5 * 60 * 100,
   });
   return (
     <>

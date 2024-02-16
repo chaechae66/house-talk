@@ -7,6 +7,8 @@ export default function RQProvider({ children }: { children: ReactNode }) {
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
+        retryOnMount: true,
+        refetchOnReconnect: false,
         retry: false,
       },
     },
