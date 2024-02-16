@@ -3,8 +3,9 @@
 import NoImage from "@/app/_components/NoImage";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent, MouseEventHandler, useRef, useState } from "react";
+import updatePost from "../_lib/updatePost";
 
 export default function Textarea() {
   const { data } = useSession();
@@ -14,32 +15,31 @@ export default function Textarea() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const [isImgLoading, setIsImgLoading] = useState(false);
 
-  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({ mutationFn: updatePost });
 
   const handleSubmit: MouseEventHandler = () => {
     if (!text) {
       alert("포스트 내용을 적어주세요.");
     }
     const body = {
-      user: data?.user,
+      user: {
+        name: data?.user?.name!,
+        email: data?.user?.email!,
+        image: data?.user?.image!,
+      },
       src,
       text,
     };
-    try {
-      fetch("/api/home/post", { method: "POST", body: JSON.stringify(body) })
-        .then((data) => data.json())
-        .then((data) => {
-          if (data.success) {
-            alert("게시물 업로드를 성공하였습니다!");
-            setSrc(null);
-            setText("");
-            router.refresh();
-          }
-        });
-    } catch (e) {
-      console.error(e);
-      alert("게시물 업로드를 실패하였습니다.");
-    }
+    mutate(body, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["posts", "recommends"] });
+        setText("");
+        setSrc(null);
+        alert("게시물을 업로드 하였습니다.");
+      },
+    });
   };
 
   return (
@@ -86,8 +86,8 @@ export default function Textarea() {
           ref={imageInputRef}
           onChange={async (e: ChangeEvent<HTMLInputElement>) => {
             setIsImgLoading(true);
-            const file = e?.target?.files;
-            if (!file) {
+            const file = e?.target?.files!;
+            if (!file[0]) {
               setIsImgLoading(false);
               return;
             }

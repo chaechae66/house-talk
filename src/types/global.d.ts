@@ -15,7 +15,7 @@ interface Post {
 }
 
 interface User {
-  name: string;
-  email: string;
-  image: string;
+  name?: string;
+  email?: string;
+  image?: string;
 }
