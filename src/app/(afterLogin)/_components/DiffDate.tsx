@@ -9,7 +9,17 @@ export default function DiffDate({ created }: { created: number }) {
   const diffDate = () => {
     const diff = seconds - created;
     if (Math.floor(diff / (24 * 60 * 60 * 1000)) > 6) {
-      return created;
+      const createdDate = new Date(created);
+      const createdStr = [
+        createdDate.getFullYear(),
+        createdDate.getMonth() + 1 < 10
+          ? "0" + (createdDate.getMonth() + 1)
+          : createdDate.getMonth() + 1,
+        createdDate.getDate() < 10
+          ? "0" + createdDate.getDate()
+          : createdDate.getDate(),
+      ].join("-");
+      return createdStr;
     } else if (Math.floor(diff / (24 * 60 * 60 * 1000)) > 0) {
       const diffday = Math.floor(diff / (24 * 60 * 60 * 1000));
       return `${diffday}일 전`;
