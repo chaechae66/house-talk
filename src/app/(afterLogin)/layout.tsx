@@ -16,7 +16,7 @@ export default async function AfterLoginLayout({
 
   return (
     <>
-      <header className="sticky top-0 flex h-16 items-center justify-between border-b-[1px] border-solid border-gray-200 bg-white px-4">
+      <header className="border-bottom sticky top-0 flex h-16 items-center justify-between bg-white px-4">
         <Link href={"/home"} className="flex text-2xl font-bold text-primary">
           <Image src={"/logo.png"} alt="메인로고" width={40} height={40} />
           <h2 className="ml-2">하우스,톡</h2>

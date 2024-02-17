@@ -10,13 +10,13 @@ export default function Login() {
           <input
             placeholder="이메일"
             type="text"
-            className="mb-4 w-full rounded border-[1px] border-solid border-gray-200 p-2"
+            className="border-standard mb-4 w-full rounded p-2"
           />
           <br />
           <input
             placeholder="비밀번호"
             type="password"
-            className="mb-8 w-full rounded border-[1px] border-solid border-gray-200 p-2"
+            className="border-standard mb-8 w-full rounded p-2"
           />
           <button
             type="submit"

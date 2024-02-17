@@ -47,7 +47,7 @@ export default function Posts() {
                 <NoImage />
               )}
             </>
-            <div className="w-full rounded border-[1px] border-solid border-gray-200 p-2">
+            <div className="border-standard w-full rounded p-2">
               {elem.text}
             </div>
             <span className="self-center text-gray-400">

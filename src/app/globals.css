@@ -28,4 +28,12 @@ a {
   .image-rounded {
     @apply flex-center h-12 w-12 rounded-full;
   }
+
+  .border-bottom {
+    @apply border-[1px] border-solid border-b-gray-200;
+  }
+
+  .border-standard {
+    @apply border-[1px] border-solid border-gray-200;
+  }
 }
