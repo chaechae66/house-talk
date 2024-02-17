@@ -1,10 +1,10 @@
-import { PostSuccess, User } from "@/types/global";
+import { User } from "@/types/global";
 
 export default async function updatePost(body: {
   user: User;
   src: string | null;
   text: string;
-}): Promise<PostSuccess | null> {
+}) {
   try {
     return await fetch("/api/home/post", {
       method: "POST",
