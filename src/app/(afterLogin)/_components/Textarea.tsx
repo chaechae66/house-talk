@@ -77,7 +77,7 @@ export default function Textarea() {
           onChange={(e) => {
             setText(e.target.value);
           }}
-          className="h-24 w-full resize-none rounded border-[1px] border-solid border-gray-200 p-2"
+          className="border-standard h-24 w-full resize-none rounded p-2"
         ></textarea>
         <input
           type="file"

@@ -4,6 +4,10 @@ declare global {
   namespace globalThis {
     var _mongo: Promise<MongoClient>;
   }
+
+  interface Window {
+    kakao: any;
+  }
 }
 
 interface Post {
