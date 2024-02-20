@@ -7,6 +7,7 @@ declare global {
 
   interface Window {
     kakao: any;
+    daum: any;
   }
 }
 
@@ -22,4 +23,9 @@ interface User {
   name?: string;
   email?: string;
   image?: string;
+}
+
+interface IAddr {
+  address: string;
+  zonecode: string;
 }

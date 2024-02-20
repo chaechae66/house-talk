@@ -1,13 +1,13 @@
 "use client";
 
-import KakaoMap from "@/app/_components/KakaoMap";
+import KakaoMap from "@/app/(beforeLogin)/_components/KakaoMap";
 import { AddrContext, AddrContextType } from "@/hooks/useAddrContext";
 import classNames from "classnames";
 import Image from "next/image";
 import { useContext, useState } from "react";
 
 export default function ProfileForm() {
-  const [check, isCheck] = useState(false);
+  const [isAgree, setIsAgree] = useState(false);
   const { addr, setAddr }: AddrContextType = useContext(AddrContext);
 
   return (
@@ -16,13 +16,13 @@ export default function ProfileForm() {
         <span className="mr-2">위 내용에 동의합니다.</span>
         <div
           onClick={() => {
-            isCheck((prev) => !prev);
+            setIsAgree((prev) => !prev);
           }}
           className={classNames(
-            `border-standard flex-center h-8 w-8 rounded transition ${check && "bg-blue-400"}`,
+            `border-standard flex-center h-8 w-8 rounded transition ${isAgree && "bg-blue-400"}`,
           )}
         >
-          {check && (
+          {isAgree && (
             <Image
               src={"/checked_icon.svg"}
               alt="체크아이콘"

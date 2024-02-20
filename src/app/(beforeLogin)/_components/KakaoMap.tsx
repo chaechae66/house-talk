@@ -3,13 +3,14 @@
 import useDidMountEffect from "@/hooks/useDidMountEffect";
 import { AddrContext, AddrContextType } from "@/hooks/useAddrContext";
 import {
-  ChangeEvent,
-  ChangeEventHandler,
+  MouseEventHandler,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
+import DaumPostcode from "react-daum-postcode";
+import { IAddr } from "@/types/global";
 
 declare global {
   interface Window {
@@ -22,6 +23,7 @@ const KakaoMap = () => {
   const [map, setMap] = useState<any>();
   const [marker, setMarker] = useState<any>();
   const { addr, setAddr }: AddrContextType = useContext(AddrContext);
+  const [isPostModal, setIsPostModal] = useState(false);
 
   useEffect(() => {
     window.kakao.maps.load(() => {
@@ -65,21 +67,26 @@ const KakaoMap = () => {
       );
   }, [map]);
 
-  const handleInputAdrr: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    setAddr(e.target.value);
+  const handleInputAdrr: MouseEventHandler<HTMLTextAreaElement> = (e) => {
+    setIsPostModal(true);
+  };
+
+  const onCompletePost = (data: any) => {
+    setAddr(data.jibunAddress);
+    const jibunAddress = data.jibunAddress;
     var geocoder = new window.kakao.maps.services.Geocoder();
-
-    geocoder.addressSearch(addr, function (result: any, status: any) {
+    geocoder.addressSearch(jibunAddress, function (result: any, status: any) {
       if (status === window.kakao.maps.services.Status.OK) {
-        var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-
+        var currentPos = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+        (document.getElementById("addr") as HTMLInputElement).value =
+          jibunAddress;
+        map.panTo(currentPos);
         marker.setMap(null);
-        marker.setPosition(coords);
+        marker.setPosition(currentPos);
         marker.setMap(map);
-
-        map.setCenter(coords);
       }
     });
+    setIsPostModal(false);
   };
 
   return (
@@ -90,13 +97,29 @@ const KakaoMap = () => {
       <label>
         주소
         <br />
-        <textarea
-          value={addr}
-          onChange={handleInputAdrr}
-          className="border-standard mt-2 h-16 w-full resize-none rounded p-2"
-        />
+        <div>
+          <textarea
+            id="addr"
+            value={addr}
+            readOnly
+            onClick={handleInputAdrr}
+            className="border-standard mt-2 h-12 w-full resize-none rounded p-2"
+          />
+        </div>
       </label>
-      <br />
+      {isPostModal && (
+        <div className="flex flex-col items-end">
+          <span
+            onClick={() => {
+              setIsPostModal(false);
+            }}
+            className="flex-center h-5 w-5 bg-gray-500 text-xs text-white"
+          >
+            X
+          </span>
+          <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
+        </div>
+      )}
       <label>
         상세주소
         <br />
